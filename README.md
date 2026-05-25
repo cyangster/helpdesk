@@ -1,11 +1,7 @@
 # HelpDesk Pro
 
-A full-stack IT helpdesk ticketing app for my portfolio. Users can view ticket metrics, browse and filter support requests, create new tickets, and manage status, priority, and notes.
+A full-stack IT helpdesk ticketing app for my portfolio using example tickets. Users can view ticket metrics, browse and filter support requests, create new tickets, and manage status, priority, and notes.
 
-**Live Demo:** [cyhelpdesk.vercel.app](https://cyhelpdesk.vercel.app/)  
-**Source Code:** [github.com/cyangster/helpdesk](https://github.com/cyangster/helpdesk)
-
----
 
 ## Tools Used
 
@@ -27,9 +23,3 @@ A full-stack IT helpdesk ticketing app for my portfolio. Users can view ticket m
 
 - **Live app:** https://cyhelpdesk.vercel.app/
 - **Repository:** https://github.com/cyangster/helpdesk
-
----
-
-## License
-
-[MIT](./LICENSE)
