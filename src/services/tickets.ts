@@ -1,9 +1,20 @@
-import { supabase } from '@/lib/supabase.js'
+import { getSupabase } from '@/lib/supabase.js'
 import type { CreateTicketInput, Ticket, TicketNote } from '@/types/database'
+
+/** Ensure Supabase is configured before any API call */
+function requireSupabase() {
+  const supabase = getSupabase()
+  if (!supabase) {
+    throw new Error(
+      'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then redeploy.'
+    )
+  }
+  return supabase
+}
 
 /** Fetch all tickets, newest first */
 export async function fetchTickets(): Promise<Ticket[]> {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from('tickets')
     .select('*')
     .order('created_at', { ascending: false })
@@ -14,7 +25,11 @@ export async function fetchTickets(): Promise<Ticket[]> {
 
 /** Fetch a single ticket by UUID */
 export async function fetchTicketById(id: string): Promise<Ticket> {
-  const { data, error } = await supabase.from('tickets').select('*').eq('id', id).single()
+  const { data, error } = await requireSupabase()
+    .from('tickets')
+    .select('*')
+    .eq('id', id)
+    .single()
 
   if (error) throw new Error(error.message)
   return data as Ticket
@@ -22,7 +37,7 @@ export async function fetchTicketById(id: string): Promise<Ticket> {
 
 /** Insert a new ticket (status defaults to open in DB) */
 export async function createTicket(input: CreateTicketInput): Promise<Ticket> {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from('tickets')
     .insert({
       title: input.title,
@@ -44,7 +59,7 @@ export async function updateTicket(
   id: string,
   updates: Partial<Pick<Ticket, 'status' | 'priority'>>
 ): Promise<Ticket> {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from('tickets')
     .update(updates)
     .eq('id', id)
@@ -68,7 +83,7 @@ export async function fetchTicketStats() {
 
 /** Fetch notes for a ticket, oldest first */
 export async function fetchTicketNotes(ticketId: string): Promise<TicketNote[]> {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from('ticket_notes')
     .select('*')
     .eq('ticket_id', ticketId)
@@ -80,7 +95,7 @@ export async function fetchTicketNotes(ticketId: string): Promise<TicketNote[]> 
 
 /** Add a note to a ticket */
 export async function createTicketNote(ticketId: string, note: string): Promise<TicketNote> {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from('ticket_notes')
     .insert({ ticket_id: ticketId, note })
     .select()
