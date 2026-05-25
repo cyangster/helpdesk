@@ -7,7 +7,7 @@ export function Footer() {
         <span className="font-medium text-slate-700">Chris</span>
         {' · '}
         <a
-          href="https://github.com/YOUR_GITHUB_USERNAME"
+          href="https://github.com/cyangster/helpdesk"
           target="_blank"
           rel="noopener noreferrer"
           className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
